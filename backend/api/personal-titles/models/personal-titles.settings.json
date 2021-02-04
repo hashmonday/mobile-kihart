@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "personal_titles",
+  "info": {
+    "name": "PersonalTitles",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "code": {
+      "type": "uid",
+      "required": true
+    },
+    "title_th": {
+      "type": "string",
+      "required": true
+    },
+    "title_en": {
+      "type": "string",
+      "required": true
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}

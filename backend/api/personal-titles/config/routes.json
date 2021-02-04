@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/personal-titles",
+      "handler": "personal-titles.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/personal-titles/count",
+      "handler": "personal-titles.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/personal-titles/:id",
+      "handler": "personal-titles.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/personal-titles",
+      "handler": "personal-titles.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/personal-titles/:id",
+      "handler": "personal-titles.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/personal-titles/:id",
+      "handler": "personal-titles.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
