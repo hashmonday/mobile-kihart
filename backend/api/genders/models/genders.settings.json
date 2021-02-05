@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "genders",
+  "info": {
+    "name": "Genders",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "code": {
+      "type": "uid"
+    },
+    "name_th": {
+      "type": "string"
+    },
+    "name_en": {
+      "type": "string"
+    }
+  }
+}

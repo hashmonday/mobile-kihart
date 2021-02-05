@@ -2,11 +2,16 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+  server: {
+    host: process.env.HOST, // default: localhost
+    port: process.env.PORT
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'mobile-kihart',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'th'
     },
     meta: [
       { charset: 'utf-8' },
@@ -31,7 +36,12 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/dotenv'
   ],
+
+  dotenv: {
+    /* module options */
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -40,6 +50,8 @@ export default {
     // https://www.npmjs.com/package/@nuxtjs/dayjs
     // https://day.js.org/
     '@nuxtjs/dayjs',
+    // https://strapi.nuxtjs.org/
+    '@nuxtjs/strapi'
   ],
 
   dayjs: {
@@ -51,10 +63,28 @@ export default {
     ]
   },
 
+  strapi: {
+    url: `http://${process.env.HOST}:1337/`,
+    entities: ['persons']
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
+  build: {},
+
+  components: {
+    dirs: [
+      '~/components',
+        {
+          path: '~/components/person/',
+          prefix: 'Person'
+        },
+        {
+          path: '~/components/base/',
+          prefix: ''
+        }
+    ]
   }
 }

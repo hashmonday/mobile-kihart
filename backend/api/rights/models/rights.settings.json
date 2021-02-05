@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rights",
+  "info": {
+    "name": "Rights"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "code": {
+      "type": "uid",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}
