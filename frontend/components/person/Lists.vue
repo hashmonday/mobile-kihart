@@ -3,14 +3,14 @@
   <div class="bg-white shadow overflow-hidden sm:rounded-md">
     <ul class="divide-y divide-gray-200">
       <li v-for="(list, index) in lists" :key="index">
-        <a href="#" class="block hover:bg-gray-50">
+        <NuxtLink :to="`/person/${list.id}`" class="block hover:bg-gray-50">
           <div class="flex items-center px-4 py-4 sm:px-6">
             <div class="min-w-0 flex-1 flex items-center">
               <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                 <div>
                   <p class="text-sm font-medium text-indigo-600 truncate">
                     {{
-                      `${list.personal_title.title_th} ${list.first_name_th} ${list.last_name_th}`
+                      `${list.title_th} ${list.first_name_th} ${list.last_name_th}`
                     }}
                   </p>
                   <p class="mt-2 flex items-center text-sm text-gray-500">
@@ -81,7 +81,7 @@
               </svg>
             </div>
           </div>
-        </a>
+        </NuxtLink>
       </li>
     </ul>
   </div>
@@ -97,5 +97,6 @@ export default {
   async fetch() {
     this.lists = await this.$strapi.find('persons', { _limit: -1 })
   },
+  methods: {},
 }
 </script>

@@ -277,6 +277,7 @@ export default {
       genders: [],
 
       // Personal information
+      identification_number_old: '',
       identification_number: '',
       date_of_birth: '',
       gender: '',
@@ -291,6 +292,18 @@ export default {
   },
   async fetch() {
     this.genders = await this.$strapi.find('genders')
+    const data = await this.$strapi.findOne('persons', this.$route.params.id)
+    this.identification_number_old = data.identification_number
+    this.identification_number = data.identification_number
+    this.date_of_birth = data.date_of_birth
+    this.gender = data.gender.id
+    this.title_th = data.title_th
+    this.title_en = data.title_en
+    this.first_name_th = data.first_name_th
+    this.first_name_en = data.first_name_en
+    this.last_name_th = data.last_name_th
+    this.last_name_en = data.last_name_en
+    this.address = data.address
   },
   watch: {
     date_of_birth() {
@@ -337,19 +350,23 @@ export default {
               if (index > -1) this.errors.splice(index, 1)
 
               //ตรวจสอบหมายเลขบัตรประจำตัวประชาชนใน Database ว่ามีแล้วหรือไม่
-              let countData = await this.$strapi
-                .count('persons', {
-                  identification_number: this.identification_number,
-                })
-                .catch((error) => {
-                  console.log(error.original.data)
-                })
-              if (countData > 0) {
-                if (this.errors.indexOf(errMsg3) == -1)
-                  this.errors.push(errMsg3)
-              } else {
-                let index = this.errors.indexOf(errMsg3)
-                if (index > -1) this.errors.splice(index, 1)
+              if (
+                this.identification_number_old != this.identification_number
+              ) {
+                let countData = await this.$strapi
+                  .count('persons', {
+                    identification_number: this.identification_number,
+                  })
+                  .catch((error) => {
+                    console.log(error.original.data)
+                  })
+                if (countData > 0) {
+                  if (this.errors.indexOf(errMsg3) == -1)
+                    this.errors.push(errMsg3)
+                } else {
+                  let index = this.errors.indexOf(errMsg3)
+                  if (index > -1) this.errors.splice(index, 1)
+                }
               }
             } else {
               if (this.errors.indexOf(errMsg2) == -1) this.errors.push(errMsg2)
@@ -413,20 +430,23 @@ export default {
       ) {
         let index = this.errors.indexOf(errMsg4)
         if (index > -1) this.errors.splice(index, 1)
-        let countData = await this.$strapi
-          .count('persons', {
-            identification_number: this.identification_number,
-          })
-          .catch((error) => {
-            console.log(error.original.data)
-          })
+        let countData = 0
+        if (this.identification_number_old != this.identification_number) {
+          countData = await this.$strapi
+            .count('persons', {
+              identification_number: this.identification_number,
+            })
+            .catch((error) => {
+              console.log(error.original.data)
+            })
+        }
         if (countData > 0) {
           if (this.errors.indexOf(errMsg3) == -1) this.errors.push(errMsg3)
         } else {
           let index = this.errors.indexOf(errMsg3)
           if (index > -1) this.errors.splice(index, 1)
           await this.$strapi
-            .create('persons', {
+            .update('persons', this.$route.params.id, {
               identification_number: this.identification_number,
               date_of_birth: this.date_of_birth,
               gender: this.gender,

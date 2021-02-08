@@ -15,9 +15,6 @@
       "type": "uid",
       "required": true
     },
-    "personal_title": {
-      "model": "personal-titles"
-    },
     "first_name_th": {
       "type": "string",
       "required": false
@@ -32,6 +29,25 @@
     "last_name_en": {
       "type": "string",
       "required": false
+    },
+    "address": {
+      "type": "text",
+      "required": true
+    },
+    "date_of_birth": {
+      "type": "date",
+      "required": true
+    },
+    "gender": {
+      "model": "genders"
+    },
+    "title_th": {
+      "type": "string",
+      "required": true
+    },
+    "title_en": {
+      "type": "string",
+      "required": true
     }
   }
 }
