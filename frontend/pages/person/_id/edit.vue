@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="pt-2">
-      <NuxtLink to="/">
+      <NuxtLink :to="`/person/${$route.params.id}`">
         <button
           type="button"
           class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -241,7 +241,7 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-6">
+                <div class="col-span-6 sm:col-span-4">
                   <label
                     for="Address"
                     class="block text-sm font-medium text-gray-700"
@@ -251,6 +251,21 @@
                     v-model="address"
                     type="text"
                     id="Adress"
+                    autocomplete="off"
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
+                </div>
+
+                <div class="col-span-6 sm:col-span-2">
+                  <label
+                    for="telephone_number"
+                    class="block text-sm font-medium text-gray-700"
+                    >เบอร์โทรศัพท์</label
+                  >
+                  <input
+                    v-model="telephone_number"
+                    type="text"
+                    id="telephone_number"
                     autocomplete="off"
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
@@ -288,6 +303,7 @@ export default {
       first_name_en: '',
       last_name_en: '',
       address: '',
+      telephone_number: '',
     }
   },
   async fetch() {
@@ -304,6 +320,7 @@ export default {
     this.last_name_th = data.last_name_th
     this.last_name_en = data.last_name_en
     this.address = data.address
+    this.telephone_number = data.telephone_number
   },
   watch: {
     date_of_birth() {
@@ -457,6 +474,7 @@ export default {
               first_name_en: this.first_name_en,
               last_name_en: this.last_name_en,
               address: this.address,
+              telephone_number: this.telephone_number,
             })
             .then((result) => {
               return this.$router.push(`/person/${result.id}`)

@@ -61,7 +61,7 @@ export default {
     defaultLocale: 'th',
     defaultTimeZone: 'Asia/Bangkok',
     plugins: [
-      'utc', 'timezone', 'RelativeTime'
+      'utc', 'timezone', 'RelativeTime', 'BuddhistEra'
     ]
   },
 

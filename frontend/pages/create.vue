@@ -241,7 +241,7 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-6">
+                <div class="col-span-6 sm:col-span-4">
                   <label
                     for="Address"
                     class="block text-sm font-medium text-gray-700"
@@ -251,6 +251,21 @@
                     v-model="address"
                     type="text"
                     id="Adress"
+                    autocomplete="off"
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
+                </div>
+
+                <div class="col-span-6 sm:col-span-2">
+                  <label
+                    for="telephone_number"
+                    class="block text-sm font-medium text-gray-700"
+                    >เบอร์โทรศัพท์</label
+                  >
+                  <input
+                    v-model="telephone_number"
+                    type="text"
+                    id="telephone_number"
                     autocomplete="off"
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
@@ -287,6 +302,7 @@ export default {
       first_name_en: '',
       last_name_en: '',
       address: '',
+      telephone_number: '',
     }
   },
   async fetch() {
@@ -437,6 +453,7 @@ export default {
               first_name_en: this.first_name_en,
               last_name_en: this.last_name_en,
               address: this.address,
+              telephone_number: this.telephone_number,
             })
             .then((result) => {
               return this.$router.push(`/person/${result.id}`)

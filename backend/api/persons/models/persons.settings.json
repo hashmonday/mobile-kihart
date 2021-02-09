@@ -48,6 +48,14 @@
     "title_en": {
       "type": "string",
       "required": true
+    },
+    "created_date": {
+      "type": "date",
+      "required": true
+    },
+    "telephone_number": {
+      "type": "string",
+      "required": false
     }
   }
 }

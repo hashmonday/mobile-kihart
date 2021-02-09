@@ -188,7 +188,7 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-6">
+                <div class="col-span-6 sm:col-span-4">
                   <label
                     for="Address"
                     class="block text-sm font-medium text-gray-700"
@@ -203,13 +203,29 @@
                     class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                 </div>
+
+                <div class="col-span-6 sm:col-span-2">
+                  <label
+                    for="telephone_number"
+                    class="block text-sm font-medium text-gray-700"
+                    >เบอร์โทรศัพท์</label
+                  >
+                  <input
+                    v-model="telephone_number"
+                    type="text"
+                    id="telephone_number"
+                    autocomplete="off"
+                    disabled
+                    class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="pt-2 w-80" v-show="true">
+    <div class="pt-2 w-80" v-show="false">
       <!-- SOURCE -->
       <div id="printMe">
         <div class="text-center text-xs">
@@ -246,6 +262,7 @@ export default {
       first_name_en: '',
       last_name_en: '',
       address: '',
+      telephone_number: '',
     }
   },
   async fetch() {
@@ -260,6 +277,7 @@ export default {
     this.last_name_th = data.last_name_th
     this.last_name_en = data.last_name_en
     this.address = data.address
+    this.telephone_number = data.telephone_number
   },
   methods: {
     print() {
