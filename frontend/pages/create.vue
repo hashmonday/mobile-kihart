@@ -454,6 +454,7 @@ export default {
               last_name_en: this.last_name_en,
               address: this.address,
               telephone_number: this.telephone_number,
+              created_date: this.$dayjs().format('YYYY-MM-DD'),
             })
             .then((result) => {
               return this.$router.push(`/person/${result.id}`)
