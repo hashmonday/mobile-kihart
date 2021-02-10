@@ -236,6 +236,8 @@
           <p>
             เกิดวันที่:
             {{ $dayjs(date_of_birth).add(543, 'year').format('DD MMMM YYYY') }}
+          </p>
+          <p>
             อายุ: {{ $dayjs().diff(date_of_birth, 'year') }} ปี
             {{ $dayjs().diff(date_of_birth, 'month') % 12 }} เดือน
             {{ Math.floor($dayjs().diff(date_of_birth, 'day') % 30.4375) }} วัน

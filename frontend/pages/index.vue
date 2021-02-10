@@ -11,6 +11,13 @@
               สร้าง
             </button>
           </NuxtLink>
+
+          <button
+            class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-10"
+            @click="onExport"
+          >
+            Export
+          </button>
         </div>
         <div class="col-span-6 md:col-span-3">
           <div class="flex-1 min-w-0">
@@ -117,7 +124,7 @@
                     <div>
                       <p class="text-sm font-medium text-indigo-600 truncate">
                         {{
-                          `${list.title_th} ${list.first_name_th} ${list.last_name_th}`
+                          `${list.no} : ${list.title_th} ${list.first_name_th} ${list.last_name_th}`
                         }}
                       </p>
                       <p class="mt-2 flex items-center text-sm text-gray-500">
@@ -176,8 +183,11 @@
                           </p>
                         </div>
                         <p class="mt-2 flex items-center text-sm text-gray-500">
-                          <!-- Heroicon name: solid/check-circle -->
                           <svg
+                            v-if="
+                              list.telephone != null &&
+                              list.telephone_number.length > 10
+                            "
                             class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -190,7 +200,27 @@
                               clip-rule="evenodd"
                             />
                           </svg>
-                          ข้อมูลครบถ้วน
+
+                          <svg
+                            v-else
+                            class="flex-shrink-0 mr-1.5 h-5 w-5 text-yellow-400"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                          {{
+                            list.telephone != null &&
+                            list.telephone_number.length > 10
+                              ? 'ข้อมูลครบถ้วน'
+                              : 'ข้อมูลไม่ครบถ้วน'
+                          }}
                         </p>
                       </div>
                     </div>
@@ -222,6 +252,7 @@
 </template>
 
 <script>
+import XLSX from 'xlsx'
 export default {
   data() {
     return {
@@ -233,17 +264,30 @@ export default {
   },
   async fetch() {
     this.created_date = this.$dayjs().format('YYYY-MM-DD')
-    this.lists = await this.$strapi.find('persons', {
+    let data = await this.$strapi.find('persons', {
       created_date: this.created_date,
       _limit: -1,
     })
+
+    let n = 1
+    data.forEach((el, i) => {
+      data[i].no = n
+      n++
+    })
+    this.lists = data
   },
   watch: {
     async created_date() {
-      this.lists = await this.$strapi.find('persons', {
+      let data = await this.$strapi.find('persons', {
         created_date: this.created_date,
         _limit: -1,
       })
+      let n = 1
+      data.forEach((el, i) => {
+        data[i].no = n
+        n++
+      })
+      this.lists = data
     },
   },
   computed: {
@@ -284,10 +328,52 @@ export default {
   },
   methods: {
     async refresh() {
-      this.lists = await this.$strapi.find('persons', {
+      let data = await this.$strapi.find('persons', {
         created_date: this.created_date,
         _limit: -1,
       })
+      let n = 1
+      data.forEach((el, i) => {
+        data[i].no = n
+        n++
+      })
+
+      this.lists = data
+    },
+    async onExport() {
+      let data = await this.$strapi.find('persons', {
+        created_date: this.created_date,
+        _limit: -1,
+      })
+      let data2 = []
+      let n = 1
+      data.forEach((el, i) => {
+        data2.push({
+          ลำดับที่: n,
+          'ชื่อ-นามสกุล (ไทย)': `${el.title_th} ${el.first_name_th} ${el.last_name_th}`,
+          'ชื่อ-นามสกุล (อังกฤษ)': `${el.title_en} ${el.first_name_en} ${el.last_name_en}`,
+          หมายเลขบัตรประจำตัว: el.identification_number,
+          เพศ: `${el.gender.name_th}`,
+          'วันเดือนปีเกิด (พ.ศ.)': this.$dayjs(el.date_of_birth).format(
+            'MM/DD/BBBB'
+          ),
+          'วันเดือนปีเกิด (ค.ศ.)': this.$dayjs(el.date_of_birth).format(
+            'MM/DD/YYYY'
+          ),
+          'อายุ (ปี)': this.$dayjs(el.created_at).diff(
+            el.date_of_birth,
+            'year'
+          ),
+          ที่อยู่: el.address,
+          เบอร์โทรศัพท์: el.telphone_number,
+        })
+        n++
+      })
+
+      const dataWS = XLSX.utils.json_to_sheet(data2)
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, dataWS)
+      XLSX.writeFile(wb, `mobile-kihart ${this.created_date}.xlsx`)
     },
   },
 }
