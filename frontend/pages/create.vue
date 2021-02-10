@@ -113,7 +113,7 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-2">
+                <div class="col-span-6 sm:col-span-1">
                   <label
                     for="date_of_birth"
                     class="block text-sm font-medium text-gray-700"
@@ -128,7 +128,7 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-2">
+                <div class="col-span-6 sm:col-span-1">
                   <div>
                     <label
                       for="gender"
@@ -146,6 +146,29 @@
                         :value="gender.code"
                       >
                         {{ gender.name_th }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-span-6 sm:col-span-2">
+                  <div>
+                    <label
+                      for="right"
+                      class="block text-sm font-medium text-gray-700"
+                      >สิทธิ์</label
+                    >
+                    <select
+                      v-model="right"
+                      id="right"
+                      class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    >
+                      <option
+                        v-for="(right, index) in rights"
+                        :key="index"
+                        :value="right.id"
+                      >
+                        {{ right.name }}
                       </option>
                     </select>
                   </div>
@@ -290,6 +313,7 @@ export default {
       // Options
       errors: [],
       genders: [],
+      rights: [],
 
       // Personal information
       identification_number: '',
@@ -303,10 +327,12 @@ export default {
       last_name_en: '',
       address: '',
       telephone_number: '',
+      right: '',
     }
   },
   async fetch() {
     this.genders = await this.$strapi.find('genders')
+    this.rights = await this.$strapi.find('rights')
   },
   watch: {
     date_of_birth() {
@@ -425,7 +451,9 @@ export default {
         this.first_name_en &&
         this.last_name_th &&
         this.last_name_en &&
-        this.address
+        this.address &&
+        this.telephone_number &&
+        this.right
       ) {
         let index = this.errors.indexOf(errMsg4)
         if (index > -1) this.errors.splice(index, 1)

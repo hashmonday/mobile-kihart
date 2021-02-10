@@ -58,7 +58,7 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-2">
+                <div class="col-span-6 sm:col-span-1">
                   <label
                     for="date_of_birth"
                     class="block text-sm font-medium text-gray-700"
@@ -74,7 +74,7 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-2">
+                <div class="col-span-6 sm:col-span-1">
                   <div>
                     <label
                       for="gender"
@@ -85,6 +85,24 @@
                       v-model="gender"
                       type="text"
                       id="gender"
+                      autocomplete="off"
+                      disabled
+                      class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-span-6 sm:col-span-2">
+                  <div>
+                    <label
+                      for="right"
+                      class="block text-sm font-medium text-gray-700"
+                      >สิทธิ์</label
+                    >
+                    <input
+                      v-model="right"
+                      type="text"
+                      id="right"
                       autocomplete="off"
                       disabled
                       class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -265,6 +283,7 @@ export default {
       last_name_en: '',
       address: '',
       telephone_number: '',
+      right: '',
     }
   },
   async fetch() {
@@ -280,6 +299,7 @@ export default {
     this.last_name_en = data.last_name_en
     this.address = data.address
     this.telephone_number = data.telephone_number
+    this.right = data.right.name
   },
   methods: {
     print() {

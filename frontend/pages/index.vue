@@ -185,8 +185,8 @@
                         <p class="mt-2 flex items-center text-sm text-gray-500">
                           <svg
                             v-if="
-                              list.telephone != null &&
-                              list.telephone_number.length > 10
+                              list.telephone_number != null &&
+                              list.telephone_number.length >= 8
                             "
                             class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
                             xmlns="http://www.w3.org/2000/svg"
@@ -216,8 +216,8 @@
                             />
                           </svg>
                           {{
-                            list.telephone != null &&
-                            list.telephone_number.length > 10
+                            list.telephone_number != null &&
+                            list.telephone_number.length >= 8
                               ? 'ข้อมูลครบถ้วน'
                               : 'ข้อมูลไม่ครบถ้วน'
                           }}
