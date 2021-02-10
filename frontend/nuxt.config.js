@@ -53,7 +53,7 @@ export default {
     // https://day.js.org/
     '@nuxtjs/dayjs',
     // https://strapi.nuxtjs.org/
-    '@nuxtjs/strapi'
+    '@nuxtjs/strapi',
   ],
 
   dayjs: {

@@ -1,18 +1,18 @@
 <template>
   <div>
     <div class="pt-2">
-      <div class="grid grid-cols-12 gap-2">
-        <div class="col-span-6 md:col-span-4">
+      <div class="grid grid-cols-9 gap-2">
+        <div class="col-span-6 md:col-span-2">
           <NuxtLink to="/create">
             <button
               type="button"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-10"
             >
               สร้าง
             </button>
           </NuxtLink>
         </div>
-        <div class="col-span-6 md:col-span-4">
+        <div class="col-span-6 md:col-span-3">
           <div class="flex-1 min-w-0">
             <label for="search" class="sr-only">ค้นหา</label>
             <div class="relative rounded-md shadow-sm">
@@ -40,7 +40,7 @@
                 type="search"
                 name="search"
                 id="search"
-                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md h-10"
                 placeholder="ค้นหา"
               />
             </div>
@@ -54,34 +54,52 @@
                 v-model="created_date"
                 type="date"
                 id="created_date"
-                class="focus:ring-indigo-500 focus:border-pink-500 block w-full px-auto sm:text-sm border-indigo-300 rounded-md"
+                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full px-auto sm:text-sm border-indigo-300 rounded-md h-10"
               />
             </div>
           </div>
         </div>
-        <div class="col-span-6 md:col-span-2">
+        <div class="col-span-6 md:col-span-1">
           <div class="flex-1 min-w-0 text-gray-900">
             <label for="sort_by" class="sr-only">เรียงตาม</label>
             <div class="relative rounded-md shadow-sm">
               <select
                 v-model="sort_by"
                 id="sort_by"
-                class="focus:ring-indigo-900 focus:border-pink-500 block w-full px-auto sm:text-sm border-indigo-300 rounded-md"
+                class="focus:ring-indigo-900 focus:border-indigo-500 block w-full px-auto sm:text-sm border-indigo-300 rounded-md h-10"
               >
-                <option value="updated_at_descending">
-                  เรียงจากเแก้ไขล่าสุด
-                </option>
-                <option value="updated_at_asscending">
-                  เรียงจากแก้ไขแรกสุด
-                </option>
-                <option value="created_at_descending">
-                  เรียงจากสร้างล่าสุด
-                </option>
-                <option value="created_at_asscending">
-                  เรียงจากสร้างแรกสุด
-                </option>
+                <option value="updated_at_descending">เแก้ไขล่าสุด</option>
+                <option value="updated_at_asscending">แก้ไขแรกสุด</option>
+                <option value="created_at_descending">สร้างล่าสุด</option>
+                <option value="created_at_asscending">สร้างแรกสุด</option>
               </select>
             </div>
+          </div>
+        </div>
+        <div class="invisible md:visible md:col-span-1">
+          <div class="flex justify-end">
+            <button
+              @click="refresh"
+              type="button"
+              class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-10"
+            >
+              {{ filterPersons.length }} / {{ lists.length }}
+              <!-- Heroicon name: refresh -->
+              <svg
+                class="ml-3 -mr-1 h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
@@ -264,6 +282,13 @@ export default {
       return filteredLists
     },
   },
-  methods: {},
+  methods: {
+    async refresh() {
+      this.lists = await this.$strapi.find('persons', {
+        created_date: this.created_date,
+        _limit: -1,
+      })
+    },
+  },
 }
 </script>
