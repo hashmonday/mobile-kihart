@@ -97,7 +97,7 @@
 
             <div class="mt-5 md:mt-0 md:col-span-2">
               <div class="grid grid-cols-6 gap-6">
-                <div class="col-span-6 sm:col-span-2">
+                <div class="col-span-6 sm:col-span-3">
                   <label
                     for="identification_number"
                     class="block text-sm font-medium text-gray-700"
@@ -151,27 +151,20 @@
                   </div>
                 </div>
 
-                <div class="col-span-6 sm:col-span-2">
-                  <div>
-                    <label
-                      for="right"
-                      class="block text-sm font-medium text-gray-700"
-                      >สิทธิ์</label
-                    >
-                    <select
-                      v-model="right"
-                      id="right"
-                      class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                    >
-                      <option
-                        v-for="(right, index) in rights"
-                        :key="index"
-                        :value="right.id"
-                      >
-                        {{ right.name }}
-                      </option>
-                    </select>
-                  </div>
+                <div class="col-span-6 sm:col-span-1">
+                  <label
+                    for="age_year"
+                    class="block text-sm font-medium text-gray-700"
+                    >อายุ (ปี)</label
+                  >
+                  <input
+                    :value="$dayjs().diff(date_of_birth, 'year') || ''"
+                    type="text"
+                    id="age_year"
+                    autocomplete="off"
+                    disabled
+                    class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
                 </div>
 
                 <div class="col-span-6 sm:col-span-2">
@@ -264,7 +257,7 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-4">
+                <div class="col-span-6 sm:col-span-6">
                   <label
                     for="Address"
                     class="block text-sm font-medium text-gray-700"
@@ -279,7 +272,7 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-2">
+                <div class="col-span-6 sm:col-span-3">
                   <label
                     for="telephone_number"
                     class="block text-sm font-medium text-gray-700"
@@ -292,6 +285,29 @@
                     autocomplete="off"
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
+                </div>
+
+                <div class="col-span-6 sm:col-span-3">
+                  <div>
+                    <label
+                      for="right"
+                      class="block text-sm font-medium text-gray-700"
+                      >สิทธิ์</label
+                    >
+                    <select
+                      v-model="right"
+                      id="right"
+                      class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    >
+                      <option
+                        v-for="(right, index) in rights"
+                        :key="index"
+                        :value="right.id"
+                      >
+                        {{ right.name }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>

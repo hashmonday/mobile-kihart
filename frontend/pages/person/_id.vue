@@ -41,7 +41,7 @@
 
             <div class="mt-5 md:mt-0 md:col-span-2">
               <div class="grid grid-cols-6 gap-6">
-                <div class="col-span-6 sm:col-span-2">
+                <div class="col-span-6 sm:col-span-3">
                   <label
                     for="identification_number"
                     class="block text-sm font-medium text-gray-700"
@@ -92,22 +92,22 @@
                   </div>
                 </div>
 
-                <div class="col-span-6 sm:col-span-2">
-                  <div>
-                    <label
-                      for="right"
-                      class="block text-sm font-medium text-gray-700"
-                      >สิทธิ์</label
-                    >
-                    <input
-                      v-model="right"
-                      type="text"
-                      id="right"
-                      autocomplete="off"
-                      disabled
-                      class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
-                  </div>
+                <div class="col-span-6 sm:col-span-1">
+                  <label
+                    for="age_year"
+                    class="block text-sm font-medium text-gray-700"
+                    >อายุ (ปี)</label
+                  >
+                  <input
+                    :value="
+                      $dayjs(created_date).diff(date_of_birth, 'year') || ''
+                    "
+                    type="text"
+                    id="age_year"
+                    autocomplete="off"
+                    disabled
+                    class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
                 </div>
 
                 <div class="col-span-6 sm:col-span-2">
@@ -206,7 +206,7 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-4">
+                <div class="col-span-6 sm:col-span-6">
                   <label
                     for="Address"
                     class="block text-sm font-medium text-gray-700"
@@ -222,7 +222,25 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-2">
+                <div class="col-span-6 sm:col-span-3">
+                  <div>
+                    <label
+                      for="right"
+                      class="block text-sm font-medium text-gray-700"
+                      >สิทธิ์</label
+                    >
+                    <input
+                      v-model="right"
+                      type="text"
+                      id="right"
+                      autocomplete="off"
+                      disabled
+                      class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-span-6 sm:col-span-3">
                   <label
                     for="telephone_number"
                     class="block text-sm font-medium text-gray-700"
@@ -284,6 +302,7 @@ export default {
       address: '',
       telephone_number: '',
       right: '',
+      created_date: '',
     }
   },
   async fetch() {
@@ -300,6 +319,7 @@ export default {
     this.address = data.address
     this.telephone_number = data.telephone_number
     this.right = data.right.name
+    this.created_date = data.created_date
   },
   methods: {
     print() {
