@@ -2,7 +2,7 @@
   <div>
     <div class="pt-2">
       <div class="grid grid-cols-12 gap-2">
-        <div class="col-span-4">
+        <div class="col-span-6 md:col-span-4">
           <NuxtLink to="/create">
             <button
               type="button"
@@ -12,7 +12,7 @@
             </button>
           </NuxtLink>
         </div>
-        <div class="col-span-4">
+        <div class="col-span-6 md:col-span-4">
           <div class="flex-1 min-w-0">
             <label for="search" class="sr-only">ค้นหา</label>
             <div class="relative rounded-md shadow-sm">
@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-6 md:col-span-2">
           <div class="flex-1 min-w-0 text-gray-900">
             <label for="created_date" class="sr-only">วันที่สร้าง</label>
             <div class="relative rounded-md shadow-sm">
@@ -59,7 +59,7 @@
             </div>
           </div>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-6 md:col-span-2">
           <div class="flex-1 min-w-0 text-gray-900">
             <label for="sort_by" class="sr-only">เรียงตาม</label>
             <div class="relative rounded-md shadow-sm">
@@ -210,7 +210,7 @@ export default {
       lists: [],
       created_date: '',
       search: '',
-      sort_by: 'updated_at_descending',
+      sort_by: 'created_at_descending',
     }
   },
   async fetch() {

@@ -18,15 +18,10 @@ for /l %%a in (1,1,100) do if "!ip:~-1!"==" " set ip=!ip:~0,-1!
 
 call git pull 
 
-cd ./frontend
-call yarn build
+call cd ./backend
+start yarn develop
 
-cd ../backend
-set NODE_ENV=production
-call yarn build
-start yarn start
-
-cd ../frontend
-start yarn start
+call cd ../frontend
+start yarn dev
 
 
