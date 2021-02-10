@@ -75,7 +75,7 @@
                 id="sort_by"
                 class="focus:ring-indigo-900 focus:border-indigo-500 block w-full px-auto sm:text-sm border-indigo-300 rounded-md h-10"
               >
-                <option value="updated_at_descending">เแก้ไขล่าสุด</option>
+                <option value="updated_at_descending">แก้ไขล่าสุด</option>
                 <option value="updated_at_asscending">แก้ไขแรกสุด</option>
                 <option value="created_at_descending">สร้างล่าสุด</option>
                 <option value="created_at_asscending">สร้างแรกสุด</option>
