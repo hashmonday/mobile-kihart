@@ -13,6 +13,7 @@
           </NuxtLink>
 
           <button
+            v-show="lists.length > 0"
             class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 h-10"
             @click="onExport"
           >
@@ -366,6 +367,8 @@ export default {
           ),
           ที่อยู่: el.address,
           เบอร์โทรศัพท์: el.telphone_number,
+          สิทธิ์: `${el.right.name}`,
+          วันที่รับบริการ: this.$dayjs(el.created_date).format('MM/DD/YYYY'),
         })
         n++
       })
