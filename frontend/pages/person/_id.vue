@@ -320,6 +320,8 @@ export default {
     this.telephone_number = data.telephone_number
     this.right = data.right.name
     this.created_date = data.created_date
+
+    console.log(data.created_date)
   },
   methods: {
     print() {
