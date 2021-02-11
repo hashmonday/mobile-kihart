@@ -346,6 +346,7 @@ export default {
         created_date: this.created_date,
         _limit: -1,
       })
+      console.log(data[0].right.name)
       let data2 = []
       let n = 1
       data.forEach((el, i) => {
@@ -361,13 +362,13 @@ export default {
           'วันเดือนปีเกิด (ค.ศ.)': this.$dayjs(el.date_of_birth).format(
             'MM/DD/YYYY'
           ),
-          'อายุ (ปี)': this.$dayjs(el.created_at).diff(
+          'อายุ (ปี)': this.$dayjs(el.created_date).diff(
             el.date_of_birth,
             'year'
           ),
           ที่อยู่: el.address,
           เบอร์โทรศัพท์: el.telphone_number,
-          สิทธิ์: `${el.right.name}`,
+          สิทธิ์: el.right != null ? el.right.name : '',
           วันที่รับบริการ: this.$dayjs(el.created_date).format('MM/DD/YYYY'),
         })
         n++
