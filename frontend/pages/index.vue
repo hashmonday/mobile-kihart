@@ -346,7 +346,6 @@ export default {
         created_date: this.created_date,
         _limit: -1,
       })
-      console.log(data[0].right.name)
       let data2 = []
       let n = 1
       data.forEach((el, i) => {
