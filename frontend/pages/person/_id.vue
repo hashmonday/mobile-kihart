@@ -223,6 +223,22 @@
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
+                  <label
+                    for="telephone_number"
+                    class="block text-sm font-medium text-gray-700"
+                    >เบอร์โทรศัพท์</label
+                  >
+                  <input
+                    v-model="telephone_number"
+                    type="text"
+                    id="telephone_number"
+                    autocomplete="off"
+                    disabled
+                    class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
+                </div>
+
+                <div class="col-span-6 sm:col-span-3">
                   <div>
                     <label
                       for="right"
@@ -238,22 +254,6 @@
                       class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
-                </div>
-
-                <div class="col-span-6 sm:col-span-3">
-                  <label
-                    for="telephone_number"
-                    class="block text-sm font-medium text-gray-700"
-                    >เบอร์โทรศัพท์</label
-                  >
-                  <input
-                    v-model="telephone_number"
-                    type="text"
-                    id="telephone_number"
-                    autocomplete="off"
-                    disabled
-                    class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
                 </div>
               </div>
             </div>
@@ -321,7 +321,7 @@ export default {
     this.right = data.right.name
     this.created_date = data.created_date
 
-    console.log(data.created_date)
+    console.log(data)
   },
   methods: {
     print() {
