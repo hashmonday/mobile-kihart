@@ -94,13 +94,13 @@
               </p>
             </div>
 
-            <div class="mt-5 md:mt-0 md:col-span-2">
-              <div class="grid grid-cols-6 gap-6">
-                <div class="col-span-6 sm:col-span-3">
+            <div class="mt-5 md:mt-0 md:col-span-3">
+              <div class="grid grid-cols-6 gap-1">
+                <div class="col-span-6 sm:col-span-2">
                   <label
                     for="identification_number"
                     class="block text-sm font-medium text-gray-700"
-                    >หมายเลขบัตรประจำตัวประชาชน</label
+                    >หมายเลขบัตรประจำตัว</label
                   >
                   <input
                     v-model="identification_number"
@@ -114,9 +114,29 @@
 
                 <div class="col-span-6 sm:col-span-1">
                   <label
+                    for="date_of_birth_bd"
+                    class="block text-sm font-medium text-gray-700"
+                    >วันเกิด (พ.ศ.)</label
+                  >
+                  <input
+                    :value="
+                      date_of_birth != ''
+                        ? $dayjs(date_of_birth).format('DD/MM/BBBB')
+                        : ''
+                    "
+                    type="text"
+                    id="date_of_birth_bd"
+                    autocomplete="off"
+                    disabled
+                    class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
+                </div>
+
+                <div class="col-span-6 sm:col-span-1">
+                  <label
                     for="date_of_birth"
                     class="block text-sm font-medium text-gray-700"
-                    >วันเดือนปีเกิด</label
+                    >วันเกิด (ค.ศ.)</label
                   >
                   <input
                     v-model="date_of_birth"
@@ -157,7 +177,7 @@
                     >อายุ (ปี)</label
                   >
                   <input
-                    :value="$dayjs().diff(date_of_birth, 'year') || ''"
+                    :value="age"
                     type="text"
                     id="age_year"
                     autocomplete="off"
@@ -451,6 +471,13 @@ export default {
   async fetch() {
     this.genders = await this.$strapi.find('genders')
     this.rights = await this.$strapi.find('rights')
+  },
+  computed: {
+    age() {
+      return this.date_of_birth != ''
+        ? this.$dayjs().diff(this.date_of_birth, 'year')
+        : ''
+    },
   },
   watch: {
     date_of_birth() {

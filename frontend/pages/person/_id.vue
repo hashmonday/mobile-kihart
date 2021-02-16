@@ -40,12 +40,12 @@
             </div>
 
             <div class="mt-5 md:mt-0 md:col-span-2">
-              <div class="grid grid-cols-6 gap-6">
-                <div class="col-span-6 sm:col-span-3">
+              <div class="grid grid-cols-6 gap-1">
+                <div class="col-span-6 sm:col-span-2">
                   <label
                     for="identification_number"
                     class="block text-sm font-medium text-gray-700"
-                    >หมายเลขบัตรประจำตัวประชาชน</label
+                    >หมายเลขบัตรประจำตัว</label
                   >
                   <input
                     v-model="identification_number"
@@ -60,14 +60,30 @@
 
                 <div class="col-span-6 sm:col-span-1">
                   <label
-                    for="date_of_birth"
+                    for="date_of_birth_bd"
                     class="block text-sm font-medium text-gray-700"
-                    >วันเดือนปีเกิด</label
+                    >วันเกิด (พ.ศ.)</label
                   >
                   <input
-                    v-model="date_of_birth"
-                    type="date"
-                    id="date_of_birth"
+                    :value="$dayjs(date_of_birth).format('DD/MM/BBBB')"
+                    type="text"
+                    id="date_of_birth_bd"
+                    autocomplete="off"
+                    disabled
+                    class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
+                </div>
+
+                <div class="col-span-6 sm:col-span-1">
+                  <label
+                    for="date_of_birth_ad"
+                    class="block text-sm font-medium text-gray-700"
+                    >วันเกิด (ค.ศ.)</label
+                  >
+                  <input
+                    :value="$dayjs(date_of_birth).format('DD/MM/YYYY')"
+                    type="text"
+                    id="date_of_birth_ad"
                     autocomplete="off"
                     disabled
                     class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -99,9 +115,7 @@
                     >อายุ (ปี)</label
                   >
                   <input
-                    :value="
-                      $dayjs(created_date).diff(date_of_birth, 'year') || ''
-                    "
+                    :value="age"
                     type="text"
                     id="age_year"
                     autocomplete="off"
@@ -322,6 +336,13 @@ export default {
     this.created_date = data.created_date
 
     console.log(data)
+  },
+  computed: {
+    age() {
+      return this.date_of_birth != ''
+        ? this.$dayjs().diff(this.date_of_birth, 'year')
+        : ''
+    },
   },
   methods: {
     print() {
