@@ -366,7 +366,7 @@ export default {
             'year'
           ),
           ที่อยู่: el.address,
-          เบอร์โทรศัพท์: el.telphone_number,
+          เบอร์โทรศัพท์: el.telephone_number,
           สิทธิ์: el.right != null ? el.right.name : '',
           วันที่รับบริการ: this.$dayjs(el.created_date).format('MM/DD/YYYY'),
         })
