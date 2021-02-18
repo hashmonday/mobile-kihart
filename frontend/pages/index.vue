@@ -116,7 +116,10 @@
       <div class="bg-white shadow overflow-hidden sm:rounded-md">
         <ul class="divide-y divide-gray-200">
           <li v-for="(list, index) in filterPersons" :key="index">
-            <NuxtLink :to="`/person/${list.id}`" class="block hover:bg-gray-50">
+            <div
+              @click="getPersonById(list.id, list.no)"
+              class="block hover:bg-gray-50"
+            >
               <div class="flex items-center px-4 py-4 sm:px-6">
                 <div class="min-w-0 flex-1 flex items-center">
                   <div
@@ -244,7 +247,7 @@
                   </svg>
                 </div>
               </div>
-            </NuxtLink>
+            </div>
           </li>
         </ul>
       </div>
@@ -253,6 +256,8 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex'
+
 import XLSX from 'xlsx'
 export default {
   data() {
@@ -264,7 +269,12 @@ export default {
     }
   },
   async fetch() {
-    this.created_date = this.$dayjs().format('YYYY-MM-DD')
+    if (this.$store.state.persons.created_date != '') {
+      this.created_date = this.$store.state.persons.created_date
+    } else {
+      this.created_date = this.$dayjs().format('YYYY-MM-DD')
+    }
+
     let data = await this.$strapi.find('persons', {
       created_date: this.created_date,
       _limit: -1,
@@ -279,6 +289,7 @@ export default {
   },
   watch: {
     async created_date() {
+      this.$store.commit('persons/setCreatedDate', this.created_date)
       let data = await this.$strapi.find('persons', {
         created_date: this.created_date,
         _limit: -1,
@@ -291,6 +302,7 @@ export default {
       this.lists = data
     },
   },
+
   computed: {
     filterPersons() {
       let filteredLists = this.lists
@@ -377,6 +389,10 @@ export default {
       const wb = XLSX.utils.book_new()
       XLSX.utils.book_append_sheet(wb, dataWS)
       XLSX.writeFile(wb, `mobile-kihart ${this.created_date}.xlsx`)
+    },
+    getPersonById(id, number) {
+      this.$store.commit('persons/setNumber', number)
+      this.$router.push(`/person/${id}`)
     },
   },
 }

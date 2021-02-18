@@ -220,16 +220,32 @@
                   />
                 </div>
 
-                <div class="col-span-6 sm:col-span-6">
+                <div class="col-span-6 sm:col-span-4">
                   <label
-                    for="Address"
+                    for="address"
                     class="block text-sm font-medium text-gray-700"
                     >ที่อยู่</label
                   >
                   <input
                     v-model="address"
                     type="text"
-                    id="Adress"
+                    id="adress"
+                    autocomplete="off"
+                    disabled
+                    class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
+                </div>
+
+                <div class="col-span-6 sm:col-span-2">
+                  <label
+                    for="sat_code"
+                    class="block text-sm font-medium text-gray-700"
+                    >SAT CODE</label
+                  >
+                  <input
+                    :value="satCode"
+                    type="text"
+                    id="sat_code"
                     autocomplete="off"
                     disabled
                     class="bg-gray-100 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -320,7 +336,7 @@ export default {
     }
   },
   async fetch() {
-    const data = await this.$strapi.findOne('persons', this.$route.params.id)
+    let data = await this.$strapi.findOne('persons', this.$route.params.id)
     this.identification_number = data.identification_number
     this.date_of_birth = data.date_of_birth
     this.gender = data.gender.name_th
@@ -335,13 +351,33 @@ export default {
     this.right = data.right.name
     this.created_date = data.created_date
 
-    console.log(data)
+    data = await this.$strapi.find('persons', {
+      created_date: this.created_date,
+      _limit: -1,
+    })
+
+    let n = 1
+    data.forEach((el, i) => {
+      data[i].no = n
+      n++
+    })
+
+    this.lists = data
   },
   computed: {
     age() {
       return this.date_of_birth != ''
         ? this.$dayjs().diff(this.date_of_birth, 'year')
         : ''
+    },
+    satCode() {
+      let a =
+        '41829E' +
+        this.$dayjs(this.created_date).format('DDMMYY') +
+        this.first_name_en.charAt(0).toUpperCase() +
+        this.last_name_en.charAt(0).toUpperCase() +
+        String(this.$store.state.persons.number).padStart(4, '0')
+      return a
     },
   },
   methods: {
